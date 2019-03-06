@@ -108,7 +108,7 @@
       msg
         .addClass( userOpts.classMsg )
         .attr('id', id)
-        .text( message )
+        .html( '<span>'+message+'</span>' )
         .insertAfter( field );
     };
 
