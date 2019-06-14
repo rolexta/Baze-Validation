@@ -1,4 +1,4 @@
-/*! Baze Validation v1.2.1 | (c) @_bobbylie | http://git.io/bxW4 */
+/*! Baze Validation v1.2.2 | (c) @_bobbylie | http://git.io/bxW4 */
 
 ;(function ( $, window, document, undefined ) {
 
@@ -161,17 +161,24 @@
         var allIsWell = true;
 
         fields.each( function () {
-            var $field = $(this);
+            var $field      = $(this),
+                fieldType   = $field.attr('type'),
+                isCheckbox  = fieldType === 'checkbox',
+                isRadio     = fieldType === 'radio',
+                fieldName   = $field.attr('name'),
+                $sameName   = $('input[name="'+fieldName+'"]');
 
             if ( this.hasAttribute('disabled') ) return;
 
-            if ( $field.is(':checked') ) {
-                $field.addClass( userOpts.classValid );
-            } else {
-                $field.addClass( userOpts.classInvalid );
-                addMessage( $field, userOpts.msgEmpty );
+            if(isCheckbox || isRadio) {
+                if ( $field.is(':checked') || $sameName.is(':checked')) {
+                    $field.addClass( userOpts.classValid );
+                } else {
+                    $field.addClass( userOpts.classInvalid );
+                    addMessage( $field, userOpts.msgEmpty );
 
-                allIsWell = false;
+                    allIsWell = false;
+                }
             }
         });
 
